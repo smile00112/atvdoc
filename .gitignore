@@ -2,5 +2,5 @@
 /image
 /system
 /tmp
-/config.php
-/admin/config.php
+#/config.php
+#/admin/config.php
