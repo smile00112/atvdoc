@@ -8144,8 +8144,8 @@ a.btn_buy.apuo{
 /***PROMOTIONS_NEXT_BACK_LINKS***/
 .anythingSlider-promotions-block .arrow.forward,
 .anythingSlider-promotions-block .arrow.back{ 	
-    top:63px;
-	margin:0px;
+/*     top:63px;
+	margin:0px; */
 	pointer-events: auto;
 }
 

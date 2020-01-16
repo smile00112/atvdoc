@@ -1,18 +1,18 @@
 <?php
 // HTTP
-define('HTTP_SERVER', 'http://alexgo3j.bget.ru/admin/');
-define('HTTP_CATALOG', 'http://alexgo3j.bget.ru/');
+define('HTTP_SERVER', 'http://atvdoc/admin/');
+define('HTTP_CATALOG', 'http://atvdoc/');
 
 // HTTPS
-define('HTTPS_SERVER', 'http://alexgo3j.bget.ru/admin/');
-define('HTTPS_CATALOG', 'http://alexgo3j.bget.ru/');
+define('HTTPS_SERVER', 'http://atvdoc/admin/');
+define('HTTPS_CATALOG', 'http://atvdoc/');
 
 // DIR
-define('DIR_APPLICATION', '/home/a/alexgo3j/newatvdoc/public_html/admin/');
-define('DIR_SYSTEM', '/home/a/alexgo3j/newatvdoc/public_html/system/');
-define('DIR_IMAGE', '/home/a/alexgo3j/newatvdoc/public_html/image/');
-define('DIR_STORAGE', '/home/a/alexgo3j/newatvdoc/storage/');
-define('DIR_CATALOG', '/home/a/alexgo3j/newatvdoc/public_html/catalog/');
+define('DIR_APPLICATION', 'D:/openServer/domains/atvdoc/public_html/admin/');
+define('DIR_SYSTEM', 'D:/openServer/domains/atvdoc/public_html/system/');
+define('DIR_IMAGE', 'D:/openServer/domains/atvdoc/public_html/image/');
+define('DIR_STORAGE', 'D:/openServer/domains/atvdoc/storage/');
+define('DIR_CATALOG', 'D:/openServer/domains/atvdoc/public_html/catalog/');
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
 define('DIR_CONFIG', DIR_SYSTEM . 'config/');
@@ -26,9 +26,9 @@ define('DIR_UPLOAD', DIR_STORAGE . 'upload/');
 // DB
 define('DB_DRIVER', 'mysqli');
 define('DB_HOSTNAME', 'localhost');
-define('DB_USERNAME', 'alexgo3j_atvdoc');
-define('DB_PASSWORD', 'Bft*Om2o');
-define('DB_DATABASE', 'alexgo3j_atvdoc');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', 'root');
+define('DB_DATABASE', 'atvdoc');
 define('DB_PORT', '3306');
 define('DB_PREFIX', 'oc_');
 
