@@ -11,6 +11,7 @@ class ControllerExtensionModuleBlogLatest extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/module');
+		$this->load->model('blog/category');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			if (!isset($this->request->get['module_id'])) {
@@ -125,6 +126,16 @@ class ControllerExtensionModuleBlogLatest extends Controller {
 		} else {
 			$data['status'] = '';
 		}
+
+		//Выбор категории блога
+		if (isset($this->request->post['blog_category'])) {
+			$data['blog_category'] = $this->request->post['blog_category'];
+		} elseif (!empty($module_info)) {
+			$data['blog_category'] = $module_info['blog_category'];
+		} else {
+			$data['blog_category'] = 0;
+		}
+		$data['blog_categoryes'] = $this->model_blog_category->getCategories([]);;
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

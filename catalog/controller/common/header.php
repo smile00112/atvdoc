@@ -60,6 +60,29 @@ class ControllerCommonHeader extends Controller {
 		$data['og_image'] = $this->document->getOgImage();
 		
 
+		//Подключаем меню каталога для мобильной версии  (потом убрать для мобильной версии)
+		$this->load->model('catalog/category');
+		$data['categories'] = array();
+		$categories = $this->model_catalog_category->getAllCategories(0);
+	
+		foreach ($categories as $category) {
+			$children_data = array();
+
+			$filter_data = array(
+				'filter_category_id'  => $category['category_id'],
+				'filter_sub_category' => true
+			);
+
+			if(empty($category['children'])) $category['children'] = [];
+			$data['categories'][] = array(
+				'category_id' => $category['category_id'],
+				'name'        => $category['name'],
+				'product_count' => $this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : '',
+				'children'    => $category['children'],
+				'href'        => $this->url->link('product/category', 'path=' . $category['category_id'])
+			);
+		}
+		//--Подключаем меню каталога для мобильной версии
 
 		// Wishlist
 		if ($this->customer->isLogged()) {

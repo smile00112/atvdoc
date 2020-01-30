@@ -16,7 +16,8 @@ class ControllerExtensionModuleBlogLatest extends Controller {
 			'sort'  => 'p.date_added',
 			'order' => 'DESC',
 			'start' => 0,
-			'limit' => $setting['limit']
+			'limit' => $setting['limit'],
+			'filter_blog_category_id' => $setting['blog_category']
 		);
 
 		$results = $this->model_blog_article->getArticles($filter_data);

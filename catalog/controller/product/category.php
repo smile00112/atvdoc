@@ -386,7 +386,36 @@ class ControllerProductCategory extends Controller {
 			
 
 			$this->response->setOutput($this->load->view('product/category', $data));
-		} else {
+		} else if($this->request->get['path'] == 0){
+			// мы в /catalog/
+
+
+			$data['categories'] = array();
+
+			$results = $this->model_catalog_category->getCategories(0);
+
+			foreach ($results as $result) {
+				$filter_data = array(
+					'filter_category_id'  => $result['category_id'],
+					'filter_sub_category' => true
+				);
+
+				$data['categories'][] = array(
+					'name' => $result['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
+					'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url),
+					'thumb' => ($result['image']) ? $this->model_tool_image->resize($result['image'], 500, 500) : '',
+				);
+			}
+			$data['column_left'] = $this->load->controller('common/column_left');
+			$data['column_right'] = $this->load->controller('common/column_right');
+			$data['content_top'] = $this->load->controller('common/content_top');
+			$data['content_bottom'] = $this->load->controller('common/content_bottom');
+			$data['footer'] = $this->load->controller('common/footer');
+			$data['header'] = $this->load->controller('common/header');
+			$this->response->setOutput($this->load->view('product/category_catalog', $data));
+
+		}		
+		else {
 			$url = '';
 
 			if (isset($this->request->get['path'])) {

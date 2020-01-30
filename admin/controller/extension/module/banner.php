@@ -89,6 +89,20 @@ class ControllerExtensionModuleBanner extends Controller {
 			$data['name'] = '';
 		}
 
+		if (isset($this->request->post['template_name'])) {
+			$data['template_name'] = $this->request->post['template_name'];
+		} elseif (!empty($module_info)) {
+			$data['template_name'] = $module_info['template_name'];
+		} else {
+			$data['template_name'] = '';
+		}
+		$data['templates'] = 	[
+			['name' => 'Стандарт', 'value' => 'banner'],
+			['name' => 'Категории на главной', 'value' => 'banner_home_categoryes'],
+			['name' => 'Левое меню, производители', 'value' => 'banner_left_manufac'],
+		];
+
+
 		if (isset($this->request->post['banner_id'])) {
 			$data['banner_id'] = $this->request->post['banner_id'];
 		} elseif (!empty($module_info)) {

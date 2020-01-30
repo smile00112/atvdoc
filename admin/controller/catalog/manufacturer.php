@@ -374,6 +374,14 @@ class ControllerCatalogManufacturer extends Controller {
 			$data['manufacturer_store'] = array(0);
 		}
 
+		if (isset($this->request->post['1c_id'])) {
+			$data['cc_id'] = $this->request->post['1c_id'];
+		} elseif (!empty($manufacturer_info)) {
+			$data['cc_id'] = $manufacturer_info['1c_id'];
+		} else {
+			$data['cc_id'] = '';
+		}
+
 		if (isset($this->request->post['image'])) {
 			$data['image'] = $this->request->post['image'];
 		} elseif (!empty($manufacturer_info)) {
@@ -381,7 +389,6 @@ class ControllerCatalogManufacturer extends Controller {
 		} else {
 			$data['image'] = '';
 		}
-
 		$this->load->model('tool/image');
 
 		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {

@@ -4,6 +4,7 @@
 
 class ModelBlogCategory extends Model {
 	public function addCategory($data) {
+		$data['column'] = (!empty($data['column'])) ? $data['column'] : 0;
 		$this->db->query("INSERT INTO " . DB_PREFIX . "blog_category SET parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', noindex = '" . (int)$data['noindex'] . "', date_modified = NOW(), date_added = NOW()");
 
 		$blog_category_id = $this->db->getLastId();
@@ -62,6 +63,7 @@ class ModelBlogCategory extends Model {
 	}
 
 	public function editCategory($blog_category_id, $data) {
+		$data['column'] = (!empty($data['column'])) ? $data['column'] : 0;
 		$this->db->query("UPDATE " . DB_PREFIX . "blog_category SET parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', noindex = '" . (int)$data['noindex'] . "', date_modified = NOW() WHERE blog_category_id = '" . (int)$blog_category_id . "'");
 
 		if (isset($data['image'])) {
@@ -134,7 +136,7 @@ class ModelBlogCategory extends Model {
 		}
 		
 		// SEO URL
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE query = 'category_id=" . (int)$category_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "seo_url` WHERE query = 'blog_category_id=" . (int)$blog_category_id . "'");
 
 		if (isset($data['category_seo_url'])) {
 			foreach ($data['category_seo_url'] as $store_id => $language) {
@@ -253,7 +255,7 @@ class ModelBlogCategory extends Model {
 			}
 
 			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
+				$data['limit'] = 200;
 			}
 
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];

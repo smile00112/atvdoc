@@ -1,3 +1,59 @@
+<div class="banners-main">
+  <div class="h3">Мотозапчасти</div>
+    <div class="banners-main__row"> 
+ 
+        {% for banner in banners %}
+           
+
+              <a class="banners-main__item" href="{{ banner.link }}" style="width:50%;">
+                <span class="banners-main__item-image" alt="{{ banner.title }}"
+                  style="background-image:url('{{ banner.image }}');"></span>
+                <span class="banners-main__item-block-wrap">
+                  <span class="banners-main__item-block">
+                    <span class="banners-main__item-btn">
+            
+                      <span class="banners-main__item-text">{{ banner.title }}</span>
+                      <button name="banners-main__item-button" class="btn_buy">Перейти в каталог</button>
+                    </span>
+            
+                  </span>
+                </span>
+              </a>
+
+              
+        
+
+            {% if loop.index is even  %}
+              </div><div class="banners-main__row">
+            {% endif %}
+
+      {# 
+            <a href="{{ banner.link }}">
+              <span class="item">
+                <span class="image">
+                  <img src="{{ banner.image }}" alt="{{ banner.title }}" width="69" height="24" >
+                </span>
+                <span class="item-title">{{ banner.title }}</span>
+              </span>
+            </a>
+      #}
+
+      {% endfor %}
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+{#
+
+
 <div class="vendors_bottom">
   <div class="h3">Производители</div>
   <a class="all" href="/manufacturiers/">Все производители</a>
@@ -43,7 +99,13 @@
   </div>
 </div>
 
-{#
+
+
+
+
+
+
+
 <div class="swiper-viewport">
   <div id="banner{{ module }}" class="swiper-container">
     <div class="swiper-wrapper">{% for banner in banners %}
@@ -59,4 +121,4 @@ $('#banner{{ module }}').swiper({
 });
 --></script> 
 
-#}
+#}`

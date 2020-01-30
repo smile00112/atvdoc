@@ -25491,4 +25491,13 @@ table.compare-grid td a.compare-title:hover {
 .footer_menu ul:last-child{
 	max-width:168px;
 }
-
+.vendors_bottom .h3, .banners-main .h3 {
+    float: left;
+    margin: 0px;
+    padding: 0px 0px 15px 0px;
+}
+.vendors_bottom .h3, .banners-main .h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #575b71;
+}

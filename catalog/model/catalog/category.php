@@ -18,23 +18,42 @@ class ModelCatalogCategory extends Model {
 	}
 
 	public function getAllCategories($level = 0) {
+		$this->cache->delete('categoryes.all.level.'.$level);
 		$all_categoryes = $this->cache->get('categoryes.all.level.'.$level);
 		if (!$all_categoryes) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category c LEFT JOIN " . DB_PREFIX . "category_description cd ON (c.category_id = cd.category_id) 
-			LEFT JOIN " . DB_PREFIX . "category_to_store c2s ON (c.category_id = c2s.category_id) 
-			WHERE  
-			cd.language_id = '" . (int)$this->config->get('config_language_id') . "'
-			AND c2s.store_id = '" . (int)$this->config->get('config_store_id') . "' 
-			AND c.status = '1' ORDER BY c.sort_order, LCASE(cd.name)
-		  ");
-			
-			
-			$all_categoryes	= $query->rows;
-		 	 $this->cache->set('categoryes.all.level.'.$level, $all_categoryes);
+			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category c LEFT JOIN " . DB_PREFIX . "category_description cd ON (c.category_id = cd.category_id) 
+				LEFT JOIN " . DB_PREFIX . "category_to_store c2s ON (c.category_id = c2s.category_id) 
+				WHERE  
+				cd.language_id = '" . (int)$this->config->get('config_language_id') . "'
+				AND c2s.store_id = '" . (int)$this->config->get('config_store_id') . "' 
+				AND c.status = '1' ORDER BY c.sort_order, LCASE(cd.name)
+			");
+			$all_categoryes = [];
+			$rows = $query->rows;
+
+			$all_categoryes = $this->makeCatTree($rows, 0);
+			//$all_categoryes	= $query->rows;
+		 	$this->cache->set('categoryes.all.level.'.$level, $all_categoryes);
 		}
 
 		return $all_categoryes;
 	}
+
+	private function makeCatTree($categoryes, $parent, $only_parent = false ) {
+
+			$c = array();
+			foreach ($categoryes as $cat) {
+				if($cat['parent_id'] == $parent){
+					$c[$cat['category_id']] = $cat;
+					$c[$cat['category_id']]['children'] = $this->makeCatTree($categoryes,$cat['category_id']);
+				}
+			}
+			
+	
+		return $c;
+	}
+
+
 	public function getCategoryFilters($category_id) {
 		$implode = array();
 

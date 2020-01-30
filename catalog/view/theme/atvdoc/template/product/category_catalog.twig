@@ -1,0 +1,50 @@
+{{ header }}
+
+<div class="content-wrapper">
+  <div class="center inner">
+    <div class="content">
+      <div class="left-column">
+
+        {{ column_left }}
+
+        {{ column_right }}
+
+
+      </div>
+
+
+      <div class="workarea {{ class }}" id="content">
+       {{ content_top }}
+
+
+  {% if categories %}
+    <div class="banners-main__row"> 
+       {% for category in categories %}
+
+        <a class="banners-main__item" href="{{ category.href }}" style="width:50%;">
+          <span class="banners-main__item-image" style="background-image:url('{{ category.thumb }}');"></span>
+          <span class="banners-main__item-block-wrap">
+            <span class="banners-main__item-block">
+              <span class="banners-main__item-btn">
+    
+                <span class="banners-main__item-text">{{ category.name }}</span>
+                <button name="banners-main__item-button" class="btn_buy">Перейти в каталог</button>
+              </span>
+    
+            </span>
+          </span>
+        </a>
+
+       {% endfor %}
+    </div>
+  {% endif %}
+ 
+
+        {{ content_bottom }}
+      </div>
+    </div>
+
+
+
+
+{{ footer }}

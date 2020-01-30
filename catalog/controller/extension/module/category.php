@@ -32,7 +32,7 @@ class ControllerExtensionModuleCategory extends Controller {
 		foreach ($categories as $category) {
 			$children_data = array();
 
-			if ($category['category_id'] == $data['category_id']) {
+/* 			if ($category['category_id'] == $data['category_id']) {
 				$children = $this->model_catalog_category->getCategories($category['category_id']);
 
 				foreach($children as $child) {
@@ -45,19 +45,30 @@ class ControllerExtensionModuleCategory extends Controller {
 					);
 				}
 			}
-
+ */
 			$filter_data = array(
 				'filter_category_id'  => $category['category_id'],
 				'filter_sub_category' => true
 			);
+			if(!empty($category['children'])){
+				foreach ($category['children'] as &$category_ch) {
+					$category_ch['href'] = $this->url->link('product/category', 'path=' . $category_ch['category_id']);
 
+					foreach ($category_ch['children'] as &$category_ch2) {
+						$category_ch2['href'] = $this->url->link('product/category', 'path=' . $category_ch2['category_id']);
+					}
+				}
+			}else  $category['children'] = [];
 			$data['categories'][] = array(
 				'category_id' => $category['category_id'],
-				'name'        => $category['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
-				'children'    => $children_data,
+				'name'        => $category['name'],
+				'product_count' => $this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : '',
+				'children'    => $category['children'],
 				'href'        => $this->url->link('product/category', 'path=' . $category['category_id'])
 			);
+			
 		}
+
 /*
 		$categories = $this->model_catalog_category->getCategories(0);
 
@@ -92,6 +103,6 @@ class ControllerExtensionModuleCategory extends Controller {
 		}
 */
 
-		return $this->load->view('extension/module/category', $data);
+		return $this->load->view('extension/module/category_lv3', $data);
 	}
 }

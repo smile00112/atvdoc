@@ -49,17 +49,22 @@ class ModelBlogArticle extends Model {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}	
 		
+		
 		$cache = 'article.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . (int)$customer_group_id . '.' . md5(http_build_query($data));
 		
-		$article_data = $this->cache->get($cache);
-		
+	//	$article_data = $this->cache->get($cache);
+		$article_data = '';
 		if (!$article_data) {
 			$sql = "SELECT p.article_id, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "review_article r1 WHERE r1.article_id = p.article_id AND r1.status = '1' GROUP BY r1.article_id) AS rating FROM " . DB_PREFIX . "article p LEFT JOIN " . DB_PREFIX . "article_description pd ON (p.article_id = pd.article_id) LEFT JOIN " . DB_PREFIX . "article_to_store p2s ON (p.article_id = p2s.article_id)"; 
-						
+			//Фильтруем по категории			
 			if (!empty($data['filter_blog_category_id'])) {
 				$sql .= " LEFT JOIN " . DB_PREFIX . "article_to_blog_category a2c ON (p.article_id = a2c.article_id)";			
 			}
-			
+/*
+			if(!empty['blog_category_id']){
+				$sql .= " JOIN " . DB_PREFIX . "article_to_blog_category a2c ON (p.article_id = a2c.article_id)";		
+			}
+*/
 			$sql .= " WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'"; 
 			
 			if (!empty($data['filter_name']) || !empty($data['filter_tag'])) {
